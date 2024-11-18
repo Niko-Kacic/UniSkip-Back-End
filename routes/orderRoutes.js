@@ -1,6 +1,15 @@
+// routes/orderRoutes.js
 const express = require('express');
 const router = express.Router();
+const orderController = require('../controllers/orderController');
 
-// Aquí se añadirán las rutas de pedidos más adelante
+// Confirmar el pedido
+router.post('/confirm', orderController.confirmOrder);
+
+// Realizar el pago
+router.post('/payment', orderController.createPayment);
+
+// Asociar el pago con el pedido
+router.post('/payment/associate', orderController.associatePaymentWithOrder);
 
 module.exports = router;
