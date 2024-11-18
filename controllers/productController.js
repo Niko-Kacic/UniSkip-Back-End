@@ -1,24 +1,50 @@
-const db = require('../app');
+// controllers/productController.js
+const productModel = require('../models/productModel');
 
+// Obtener todos los productos
 exports.getAllProducts = (req, res) => {
-  const query = 'SELECT * FROM producto';  // Asegúrate de que la consulta esté correctamente formateada
-  db.all(query, [], (err, rows) => {
+  productModel.getAllProducts((err, products) => {
     if (err) {
       res.status(400).json({ error: err.message });
     } else {
-      res.json({ products: rows });
+      res.json({ products });
     }
   });
 };
 
+// Crear un nuevo producto
 exports.createProduct = (req, res) => {
-  const { es_frio, es_preparado, valor, stock, id_tipo } = req.body;
-  const query = 'INSERT INTO producto (es_frio, es_preparado, valor, stock, id_tipo) VALUES (?, ?, ?, ?, ?)';
-  db.run(query, [es_frio, es_preparado, valor, stock, id_tipo], function (err) {
+  const productData = req.body;
+  productModel.createProduct(productData, (err, productId) => {
     if (err) {
       res.status(400).json({ error: err.message });
     } else {
-      res.json({ message: 'Producto creado', productId: this.lastID });
+      res.json({ message: 'Producto creado', productId });
+    }
+  });
+};
+
+// Actualizar un producto
+exports.updateProduct = (req, res) => {
+  const id = req.params.id;
+  const productData = req.body;
+  productModel.updateProduct(id, productData, (err) => {
+    if (err) {
+      res.status(400).json({ error: err.message });
+    } else {
+      res.json({ message: 'Producto actualizado' });
+    }
+  });
+};
+
+// Eliminar un producto
+exports.deleteProduct = (req, res) => {
+  const id = req.params.id;
+  productModel.deleteProduct(id, (err) => {
+    if (err) {
+      res.status(400).json({ error: err.message });
+    } else {
+      res.json({ message: 'Producto eliminado' });
     }
   });
 };
