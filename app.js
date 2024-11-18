@@ -55,6 +55,9 @@ app.use('/payments', paymentRoutes);
 const storeRoutes = require('./routes/storeRoutes');  // Importa el router de tiendas
 app.use('/stores', storeRoutes);
 
+const cartRoutes = require('./routes/cartRoutes');  // Importar rutas del carrito
+app.use('/cart', cartRoutes);
+
 app.listen(PORT, () => {
   console.log(`Servidor en ejecución en el puerto ${PORT}`);
 });
