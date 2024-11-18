@@ -58,6 +58,9 @@ app.use('/stores', storeRoutes);
 const cartRoutes = require('./routes/cartRoutes');  // Importar rutas del carrito
 app.use('/cart', cartRoutes);
 
+const notificationRoutes = require('./routes/notificationRoutes');  // Importar rutas de notificación
+app.use('/notification', notificationRoutes);
+
 app.listen(PORT, () => {
   console.log(`Servidor en ejecución en el puerto ${PORT}`);
 });
