@@ -1,10 +1,20 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const userController = require('../controllers/userController');
+const userController = require("../controllers/userController");
+const { check, validationResult } = require("express-validator");
 
 // Rutas de usuarios
-router.get('/', userController.getAllUsers);
-router.post('/', userController.createUser);
-router.delete('/:rut', userController.deleteUser);
+router.get("/", userController.getAllUsers);
+router.post("/",[//Agrgue validación de datos en el metodo POST 
+    check("rut").notEmpty().withMessage("El RUT es obligatorio"),
+    check("dv_rut")
+      .notEmpty()
+      .withMessage("El dígito verificador es obligatorio"),
+    check("nombre").notEmpty().withMessage("El nombre es obligatorio"),
+    check("apellido").notEmpty().withMessage("El apellido es obligatorio"),
+  ],
+  userController.createUser
+);
+router.delete("/:rut", userController.deleteUser);
 
-module.exports = router;  // Asegúrate de exportar correctamente el router
+module.exports = router; // Asegúrate de exportar correctamente el router

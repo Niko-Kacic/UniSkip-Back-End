@@ -14,6 +14,10 @@ exports.getAllUsers = (req, res) => {
 
 exports.createUser = (req, res) => {
   const { rut, dv_rut, nombre, apellido } = req.body;
+  if(!rut || !dv_rut || !nombre || !apellido){
+    return res.status(400)
+    .json({ error: 'Todos los campos son obligatorios' });// agregue validación de campos obligatorios (deberiamos dejarlos NOT NULL en la DB también)
+  }
   const query = 'INSERT INTO usuario (rut, dv_rut, nombre, apellido) VALUES (?, ?, ?, ?)';
   console.log(db);  // Agrega esta línea para ver el objeto db
   db.run(query, [rut, dv_rut, nombre, apellido], function (err) {
