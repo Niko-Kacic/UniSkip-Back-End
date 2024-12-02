@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController');
+const { check, validationResult } = require('express-validator');
 
 // Rutas de usuarios
 router.get('/', userController.getAllUsers);
-router.post("/",
-    [//Se chequea el metodo POST que no esten vacios los campos
+router.post("/",[//Se chequea el metodo POST que no esten vacios los campos
     check("rut").notEmpty().withMessage("El RUT es obligatorio"),
     check("dv_rut").notEmpty().withMessage("El dígito verificador es obligatorio"),
     check("nombre").notEmpty().withMessage("El nombre es obligatorio"),
