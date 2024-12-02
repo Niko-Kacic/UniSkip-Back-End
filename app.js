@@ -3,7 +3,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const sqlite3 = require("sqlite3").verbose();
 const fs = require("fs"); // Para leer el archivo SQL
-
+const routes = require("./routes/indexRoutes"); //Aqui estan las rutas centralizadas
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -37,7 +37,6 @@ const loadDatabaseSQL = () => {
   });
 };
 
-const routes = require("./routes"); //Aqui estan las rutas centralizadas
 
 //Uso de las rutas
 app.use("/products", routes.productRoutes);
