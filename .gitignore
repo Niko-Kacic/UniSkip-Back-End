@@ -1,0 +1,16 @@
+# Ignorar archivos binarios y ejecutables
+*.exe
+*.dll
+*.so
+
+# Ignorar archivos de bases de datos de SQLite
+*.db
+*.sqlite
+
+# Ignorar archivos temporales y logs
+*.log
+*.tmp
+
+# Ignorar directorios de entornos virtuales (por ejemplo, Python)
+venv/
+
