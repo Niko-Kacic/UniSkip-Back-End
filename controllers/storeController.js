@@ -1,5 +1,5 @@
 // controllers/storeController.js
-const storeModel = require('../models/storeModel');
+const storeModel = require('../models/indexModels');
 
 // Función para listar todas las tiendas
 exports.listarTiendas = (req, res) => {
