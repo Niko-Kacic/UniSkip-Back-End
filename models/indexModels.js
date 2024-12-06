@@ -5,6 +5,7 @@ const notificationModel = require('./notificationModel');
 const orderModel = require('./orderModel');
 const productModel = require('./productModel');
 const storeModel = require('./storeModel');
+const paymentModel = require('./paymentModel');
 
 module.exports = {
   cartModel,
@@ -12,4 +13,5 @@ module.exports = {
   orderModel,
   productModel,
   storeModel,
+  paymentModel,
 };

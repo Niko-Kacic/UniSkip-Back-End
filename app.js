@@ -1,12 +1,11 @@
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const routes = require("./routes/indexRoutes"); //Aqui estan las rutas centralizadas
-const db = require('./database/database')
+const routes = require("./routes/indexRoutes"); // Aquí están las rutas centralizadas
+const db = require("./database/database");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-
 
 app.get("/", (req, res) => {
   res.send("¡Bienvenido al servidor de Uni-Skip!");
@@ -17,9 +16,9 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // Uso de las rutas
-app.use("/products", routes.productRoutes);  // Asegúrate de que productRoutes esté incluido en routes/index.js
+app.use("/products", routes.productRoutes);  
 app.use("/users", routes.userRoutes);
-app.use("/orders", routes.orderRoutes);
+app.use("/orders", routes.orderRoutes);  // Asegúrate de que orderRoutes esté incluido aquí
 app.use("/payments", routes.paymentRoutes);
 app.use("/stores", routes.storeRoutes);
 app.use("/cart", routes.cartRoutes);
