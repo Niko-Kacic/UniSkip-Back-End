@@ -1,19 +1,5 @@
+// models/paymentModel.js
 const db = require('../database/database');
-
-// Confirmar el pedido (cambiar el estado a 'confirmado')
-const confirmOrder = (id_pedido, hora_entrega) => {
-  return new Promise((resolve, reject) => {
-    const query = 'UPDATE pedido SET estado = "confirmado", hora_entrega = ? WHERE id_pedido = ? AND estado = "en carrito"';
-    db.run(query, [hora_entrega, id_pedido], function (err) {
-      if (err) {
-        console.error('Error al confirmar el pedido:', err);
-        reject(err);
-      } else {
-        resolve(this.lastID);
-      }
-    });
-  });
-};
 
 // Registrar un pago
 const createPayment = (monto_pago, tipo_pago, token_webpay, hora_pago, id_tipo_pago) => {
@@ -25,6 +11,21 @@ const createPayment = (monto_pago, tipo_pago, token_webpay, hora_pago, id_tipo_p
         reject(err);
       } else {
         resolve(this.lastID);
+      }
+    });
+  });
+};
+
+// Obtener información del pago
+const getPayment = (id_pago) => {
+  return new Promise((resolve, reject) => {
+    const query = 'SELECT * FROM pago WHERE id_pago = ?';
+    db.get(query, [id_pago], (err, row) => {
+      if (err) {
+        console.error('Error al obtener la información del pago:', err);
+        reject(err);
+      } else {
+        resolve(row);
       }
     });
   });
@@ -46,7 +47,7 @@ const associatePaymentWithOrder = (id_pedido, id_pago) => {
 };
 
 module.exports = {
-  confirmOrder,
   createPayment,
+  getPayment,
   associatePaymentWithOrder,
 };
