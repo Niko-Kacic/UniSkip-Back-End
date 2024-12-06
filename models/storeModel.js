@@ -2,14 +2,14 @@ const db = require('../database/database');  // Conexión a la base de datos
 
 // Función para listar todas las tiendas
 const listarTiendas = () => {
-  // Retorna una promesa que resolverá con las filas obtenidas o rechazará con un error
   return new Promise((resolve, reject) => {
     const query = 'SELECT * FROM tienda';
     db.all(query, [], (err, rows) => {
       if (err) {
-        reject(err);  // Rechaza la promesa si ocurre un error
+        console.error('Error en la consulta listarTiendas:', err);
+        reject(err);
       } else {
-        resolve(rows);  // Resuelve la promesa con las filas obtenidas
+        resolve(rows);
       }
     });
   });
@@ -17,14 +17,17 @@ const listarTiendas = () => {
 
 // Función para obtener una tienda específica por su ID
 const obtenerTiendaPorId = (idTienda) => {
-  // Retorna una promesa que resolverá con la fila obtenida o rechazará con un error
   return new Promise((resolve, reject) => {
-    const query = 'SELECT * FROM tienda WHERE id = ?';
+    const query = 'SELECT * FROM tienda WHERE id_tienda = ?';
     db.get(query, [idTienda], (err, row) => {
       if (err) {
-        reject(err);  // Rechaza la promesa si ocurre un error
+        console.error('Error en la consulta obtenerTiendaPorId:', err);
+        reject(err);
+      } else if (!row) {
+        console.warn(`Tienda con ID ${idTienda} no encontrada`);
+        resolve(null);
       } else {
-        resolve(row);  // Resuelve la promesa con la fila obtenida
+        resolve(row);
       }
     });
   });
