@@ -1,31 +1,30 @@
-// models/storeModel.js
-const db = require('../app');  // Conexión a la base de datos
+const db = require('../database/database');  // Conexión a la base de datos
 
 // Función para listar todas las tiendas
 const listarTiendas = () => {
-  //Cambie el callback por una promesa, en caso la respuesta no sea inediata
-  return new Promise((resolve, reject)=>{
-    const query = 'SELECT * FROM tienda'; 
+  // Retorna una promesa que resolverá con las filas obtenidas o rechazará con un error
+  return new Promise((resolve, reject) => {
+    const query = 'SELECT * FROM tienda';
     db.all(query, [], (err, rows) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(rows);
-        }
+      if (err) {
+        reject(err);  // Rechaza la promesa si ocurre un error
+      } else {
+        resolve(rows);  // Resuelve la promesa con las filas obtenidas
+      }
     });
   });
 };
 
 // Función para obtener una tienda específica por su ID
 const obtenerTiendaPorId = (idTienda) => {
-  //Al igual que en listar tiendas, el callback es cambiado por una promesa
-  return new Promise((resolve, reject)=>{
+  // Retorna una promesa que resolverá con la fila obtenida o rechazará con un error
+  return new Promise((resolve, reject) => {
     const query = 'SELECT * FROM tienda WHERE id = ?';
     db.get(query, [idTienda], (err, row) => {
       if (err) {
-        reject(err);
+        reject(err);  // Rechaza la promesa si ocurre un error
       } else {
-        resolve(row);
+        resolve(row);  // Resuelve la promesa con la fila obtenida
       }
     });
   });
