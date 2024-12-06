@@ -8,5 +8,6 @@ router.get('/', productController.getAllProducts);            // Listar producto
 router.post('/', productController.createProduct);            // Crear un nuevo producto
 router.put('/:id', productController.updateProduct);          // Actualizar un producto existente
 router.delete('/:id', productController.deleteProduct);       // Eliminar un producto
+router.get('/:id', productController.getProductById);         // Obtener un producto por su ID
 
-module.exports = router;  // Exportar el router
+module.exports = router;
