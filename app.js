@@ -4,6 +4,8 @@ const bodyParser = require("body-parser");
 const sqlite3 = require("sqlite3").verbose();
 const fs = require("fs"); // Para leer el archivo SQL
 const routes = require("./routes/indexRoutes"); //Aqui estan las rutas centralizadas
+const db = require('./database/database')
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -14,28 +16,6 @@ app.get("/", (req, res) => {
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
-
-// Conexión a la base de datos SQLite
-const db = new sqlite3.Database("./database/uni-skip.db", (err) => {
-  if (err) {
-    console.error("Error al conectar a la base de datos:", err);
-  } else {
-    console.log("Conectado a la base de datos SQLite.");
-    loadDatabaseSQL();
-  }
-});
-
-// Cargar archivo SQL
-const loadDatabaseSQL = () => {
-  const sql = fs.readFileSync("./database/database.sql", "utf8");
-  db.exec(sql, (err) => {
-    if (err) {
-      console.error("Error al ejecutar el archivo SQL:", err);
-    } else {
-      console.log("Archivo SQL ejecutado correctamente.");
-    }
-  });
-};
 
 
 //Uso de las rutas
