@@ -1,19 +1,26 @@
 const db = require('../database/database');
 
-// Confirmar el pedido (cambiar el estado a 'confirmado')
-const confirmOrder = (id_pedido, hora_entrega) => {
+// Confirmar pedido
+const confirmOrder = (orders) => {
   return new Promise((resolve, reject) => {
-    const query = 'UPDATE pedido SET estado = "confirmado", hora_entrega = ? WHERE id_pedido = ? AND estado = "en carrito"';
-    db.run(query, [hora_entrega, id_pedido], function (err) {
-      if (err) {
-        console.error('Error al confirmar el pedido:', err);
-        reject(err);
-      } else {
-        resolve(this.lastID);
+    const query = `INSERT INTO pedido (hora_pedido, hora_entrega, calentar, cantidad, valor, estado, rut_usuario, id_producto, id_tienda, id_pago) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+    db.serialize(() => {
+      const stmt = db.prepare(query);
+      for (const order of orders) {
+        stmt.run([order.hora_pedido, order.hora_entrega, order.calentar, order.cantidad, order.valor, order.estado, order.rut_usuario, order.id_producto, order.id_tienda, order.id_pago]);
       }
+      stmt.finalize((err) => {
+        if (err) {
+          console.error('Error al confirmar pedido:', err);
+          reject(err);
+        } else {
+          resolve({ message: 'Pedido confirmado exitosamente' });
+        }
+      });
     });
   });
 };
+
 
 // Registrar un pago
 const createPayment = (monto_pago, tipo_pago, token_webpay, hora_pago, id_tipo_pago) => {

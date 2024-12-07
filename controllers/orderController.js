@@ -13,6 +13,19 @@ exports.confirmOrder = (req, res) => {
     });
 };
 
+
+// Confirmar pedido
+exports.confirmOrder = (req, res) => {
+  const { orders } = req.body;
+  orderModel.confirmOrder(orders)
+    .then(response => res.json(response))
+    .catch(err => {
+      console.error('Error al confirmar pedido:', err);
+      res.status(400).json({ error: err.message });
+    });
+};
+
+
 // Realizar el pago (moveremos esto a `paymentController.js`)
 exports.createPayment = (req, res) => {
   const { monto_pago, tipo_pago, token_webpay, hora_pago, id_tipo_pago } = req.body;
