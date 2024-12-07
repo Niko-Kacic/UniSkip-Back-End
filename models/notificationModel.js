@@ -1,43 +1,23 @@
 // models/notificationModel.js
-const db = require('../app');
-
-// Enviar notificación de estado de pedido
-const sendNotification = (id_pedido, estado, callback) => {
-  const query = 'SELECT u.nombre, u.apellido, p.estado, p.hora_pedido, p.hora_entrega, t.nombre AS tienda_nombre ' +
-                'FROM pedido p ' +
-                'JOIN usuario u ON p.rut_usuario = u.rut ' +
-                'JOIN tienda t ON p.id_tienda = t.id_tienda ' +
-                'WHERE p.id_pedido = ?';
-
-  db.get(query, [id_pedido], (err, row) => {
-    if (err) {
-      return callback(err);
-    }
-    if (row) {
-      // Enviar notificación al usuario
-      const notification = {
-        usuario: row.nombre + ' ' + row.apellido,
-        estado: row.estado,
-        hora_pedido: row.hora_pedido,
-        hora_entrega: row.hora_entrega,
-        tienda: row.tienda_nombre,
-      };
-      callback(null, notification);
-    } else {
-      callback('Pedido no encontrado');
-    }
-  });
-};
+const db = require('../database/database');
 
 // Actualizar estado del pedido
 const updateOrderState = (id_pedido, estado, callback) => {
   const query = 'UPDATE pedido SET estado = ? WHERE id_pedido = ?';
-  db.run(query, [estado, id_pedido], function (err) {
+  db.run(query, [estado, id_pedido], function(err) {
     callback(err, this.changes);
   });
 };
 
+// Enviar notificación del cambio de estado
+const sendNotification = (id_pedido, estado, callback) => {
+  const notificationMessage = `El estado de su pedido con ID ${id_pedido} ha sido actualizado a ${estado}.`;
+  // Aquí podrías integrar un sistema real de notificaciones, por ejemplo, enviar un correo o una notificación push.
+  console.log(notificationMessage); // Simulación del envío de la notificación
+  callback(null, { id_pedido, estado, message: notificationMessage });
+};
+
 module.exports = {
-  sendNotification,
   updateOrderState,
+  sendNotification,
 };
