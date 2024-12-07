@@ -12,6 +12,23 @@ exports.getAllProducts = (req, res) => {
     });
 };
 
+
+// Obtener productos por tienda
+exports.getProductsByStore = (req, res) => {
+  const { id_tienda } = req.params;
+  console.log('ID de tienda recibido:', id_tienda); 
+  productModel.getProductsByStore(Number(id_tienda))
+    .then(products => {
+      console.log('Productos obtenidos desde la base de datos:', products); 
+      res.json({ products });
+    })
+    .catch(err => {
+      console.error('Error al obtener productos por tienda:', err);
+      res.status(400).json({ error: err.message });
+    });
+};
+
+
 // Obtener un producto por su ID
 exports.getProductById = (req, res) => {
   const id = req.params.id;

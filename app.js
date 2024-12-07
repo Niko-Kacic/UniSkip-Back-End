@@ -16,13 +16,13 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // Uso de las rutas
-app.use("/products", routes.productRoutes);  
+app.use("/products", routes.productRoutes);
 app.use("/users", routes.userRoutes);
 app.use("/orders", routes.orderRoutes);
 app.use("/payments", routes.paymentRoutes);
 app.use("/stores", routes.storeRoutes);
 app.use("/cart", routes.cartRoutes);
-app.use("/notifications", routes.notificationRoutes); // Asegúrate de que esta línea esté presente
+app.use("/notifications", routes.notificationRoutes);
 
 app.listen(PORT, () => {
   console.log(`Servidor en ejecución en el puerto ${PORT}`);
