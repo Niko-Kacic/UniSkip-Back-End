@@ -33,8 +33,39 @@
   "id_tienda": 1
 }
 
-###Confirmar Pedido
+Confirmar Pedido
 {
   "id_pedido": 7,
   "hora_entrega": "2024-11-13 11:00"
 }
+
+Realizar un Pago
+{
+  "monto_pago": 5000,
+  "tipo_pago": "Tarjeta",
+  "token_webpay": "123456789",
+  "hora_pago": "2024-11-13 10:30",
+  "id_tipo_pago": 1,
+  "id_pedido": 7
+}
+
+Actualizar Estado del Pedido
+{
+  "id_pedido": 7,
+  "estado": "Entregado"
+}
+
+Cómo Usar los Endpoints
+Usar curl para agregar un producto al carrito
+
+curl -X POST http://localhost:3000/cart/add -H "Content-Type: application/json" -d '{"rut_usuario":12345678,"id_producto":1,"cantidad":2,"id_tienda":1}'
+
+Usar curl para confirmar un pedido
+curl -X POST http://localhost:3000/orders/confirm -H "Content-Type: application/json" -d '{"id_pedido":7,"hora_entrega":"2024-11-13 11:00"}'
+
+Usar curl para realizar un pago
+curl -X POST http://localhost:3000/payments/create -H "Content-Type: application/json" -d '{"monto_pago":5000,"tipo_pago":"Tarjeta","token_webpay":"123456789","hora_pago":"2024-11-13 10:30","id_tipo_pago":1,"id_pedido":7}'
+
+Usar curl para actualizar el estado del pedido y enviar notificación
+curl -X POST http://localhost:3000/notifications/update-state -H "Content-Type: application/json" -d '{"id_pedido":7,"estado":"Entregado"}'
+
