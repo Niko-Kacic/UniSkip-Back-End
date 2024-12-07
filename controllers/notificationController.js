@@ -1,5 +1,5 @@
 // controllers/notificationController.js
-const notificationModel = require('../models/notificationModel');
+const {notificationModel} = require('../models/indexModels');
 
 // Cambiar estado del pedido
 exports.updateOrderState = (req, res) => {
