@@ -1,10 +1,11 @@
 // controllers/orderController.js
-const {orderModel} = require('../models/indexModels');
+const { orderModel } = require('../models/indexModels');
+const { confirmOrder } = require('../utils/orderUtils');
 
 // Confirmar el pedido
 exports.confirmOrder = (req, res) => {
   const { id_pedido, hora_entrega } = req.body;
-  orderModel.confirmOrder(id_pedido, hora_entrega)
+  confirmOrder(id_pedido, hora_entrega)
     .then(orderId => res.json({ message: 'Pedido confirmado', orderId }))
     .catch(err => {
       console.error('Error al confirmar el pedido:', err);

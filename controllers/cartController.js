@@ -1,5 +1,6 @@
 // controllers/cartController.js
-const {cartModel} = require('../models/indexModels');
+const { cartModel } = require('../models/indexModels');
+const { confirmOrder } = require('../utils/orderUtils');
 
 // Agregar un producto al carrito
 exports.addProductToCart = (req, res) => {
@@ -59,7 +60,7 @@ exports.emptyCart = (req, res) => {
 // Confirmar el pedido
 exports.confirmOrder = (req, res) => {
   const { rut_usuario, id_pago, hora_entrega } = req.body;
-  cartModel.confirmOrder(rut_usuario, id_pago, hora_entrega)
+  confirmOrder(rut_usuario, id_pago, hora_entrega)
     .then(() => res.json({ message: 'Pedido confirmado' }))
     .catch(err => {
       console.error('Error al confirmar el pedido:', err);
